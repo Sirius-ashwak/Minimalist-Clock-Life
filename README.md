@@ -2,7 +2,7 @@
 
 A beautiful, feature-rich web application that displays the remaining time in the current year with customizable themes and advanced tracking features.
 
-## ✨ Features
+## Features
 
 ### Core Features
 - **Real-time Countdown**: Shows days, hours, minutes, and seconds remaining in the current year
@@ -40,7 +40,7 @@ A beautiful, feature-rich web application that displays the remaining time in th
 - **Focus Indicators**: Clear visual focus states
 - **High Contrast**: Accessible color combinations
 
-## 🎨 Design Elements
+## Design Elements
 
 - **Color Palettes**: Five carefully crafted themes
 - **Typography**: Professional monospace fonts
@@ -48,10 +48,10 @@ A beautiful, feature-rich web application that displays the remaining time in th
 - **Gradient Effects**: Dynamic progress indicators
 - **Responsive Layout**: Mobile-first design approach
 
-## 🚀 How to Use
+## How to Use
 
 1. Open `index.html` in any modern web browser
-2. Click the settings gear icon (⚙️) in the top-right corner
+2. Click the settings gear icon in the top-right corner
 3. Customize your experience:
    - Choose your preferred theme
    - Select view mode and progress style
@@ -59,7 +59,7 @@ A beautiful, feature-rich web application that displays the remaining time in th
    - Change language and font
 4. Your settings are automatically saved!
 
-## 🎯 Keyboard Shortcuts
+## Keyboard Shortcuts
 
 | Key | Action |
 |-----|--------|
@@ -68,16 +68,16 @@ A beautiful, feature-rich web application that displays the remaining time in th
 | `ESC` | Close settings panel |
 | `Tab` | Navigate through controls |
 
-## 🌐 Browser Compatibility
+## Browser Compatibility
 
 Tested and optimized for:
-- ✅ Chrome/Edge (latest)
-- ✅ Firefox (latest)
-- ✅ Safari (latest)
-- ✅ Opera (latest)
-- ✅ Mobile browsers (iOS Safari, Chrome Mobile)
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+- Opera (latest)
+- Mobile browsers (iOS Safari, Chrome Mobile)
 
-## 📁 File Structure
+## File Structure
 
 ```
 minimalist-clock/
@@ -91,27 +91,27 @@ minimalist-clock/
 └── CHANGELOG.md     # Detailed version history
 ```
 
-## 🔧 Technical Features
+## Technical Features
 
 ### Performance Optimizations
-- ⚡ Cached DOM references (zero repeated queries)
-- ⚡ Conditional rendering (particles pause when tab hidden)
-- ⚡ Optimized animation frames
-- ⚡ Efficient update cycles
+- Cached DOM references (zero repeated queries)
+- Conditional rendering (particles pause when tab hidden)
+- Optimized animation frames
+- Efficient update cycles
 
 ### Reliability
-- 🛡️ Safe localStorage wrapper with error handling
-- 🛡️ Graceful degradation when features unavailable
-- 🛡️ Null-safe DOM operations
-- 🛡️ Locale fallbacks for date formatting
+- Safe localStorage wrapper with error handling
+- Graceful degradation when features unavailable
+- Null-safe DOM operations
+- Locale fallbacks for date formatting
 
 ### Code Quality
-- 📝 Comprehensive comments
-- 📝 Modular architecture
-- 📝 Consistent coding style
-- 📝 Separation of concerns
+- Comprehensive comments
+- Modular architecture
+- Consistent coding style
+- Separation of concerns
 
-## 🎨 Customization
+## Customization
 
 ### Adding Custom Themes
 Edit `themes.css` and add your theme variables:
@@ -138,24 +138,24 @@ Edit `features.js` and add to the `holidays.en` array:
 { name: "Holiday Name", date: "MM-DD" }
 ```
 
-## 📊 Version History
+## Version History
 
 ### Version 2.0 (Current)
-- ✅ Fixed circular progress rendering
-- ✅ Fixed particle system memory leaks
-- ✅ Fixed settings persistence
-- ✅ Improved performance (DOM caching)
-- ✅ Enhanced accessibility
-- ✅ Added locale-aware formatting
-- ✅ Mobile optimizations
+- Fixed circular progress rendering
+- Fixed particle system memory leaks
+- Fixed settings persistence
+- Improved performance (DOM caching)
+- Enhanced accessibility
+- Added locale-aware formatting
+- Mobile optimizations
 
 See [CHANGELOG.md](CHANGELOG.md) for complete details.
 
-## 🐛 Known Issues
+## Known Issues
 
 **None** - All critical and major issues have been resolved!
 
-## 🤝 Contributing
+## Contributing
 
 Feel free to fork and enhance! Suggestions for future features:
 - Custom holiday management
@@ -165,12 +165,12 @@ Feel free to fork and enhance! Suggestions for future features:
 - PWA support
 - Custom theme creator
 
-## 📄 License
+## License
 
 Free to use and modify for personal and commercial projects.
 
 ---
 
-**Built with ❤️ using vanilla HTML, CSS, and JavaScript**
+**Built with care using vanilla HTML, CSS, and JavaScript**
 
 *No frameworks. No dependencies. Maximum performance and compatibility.*
