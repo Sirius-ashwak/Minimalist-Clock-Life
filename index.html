@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Year Progress - Advanced Time Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="themes.css">
+</head>
+<body class="dark-theme">
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+        <button class="settings-toggle" id="settingsToggle" aria-label="Toggle settings panel" aria-expanded="false">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M12 1v6m0 6v6m4.22-13.22l4.24 4.24M1.54 1.54l4.24 4.24M20.46 20.46l-4.24-4.24M1.54 20.46l4.24 4.24"></path>
+            </svg>
+        </button>
+        <div class="settings-content" role="dialog" aria-label="Settings">
+            <h3>Settings</h3>
+            
+            <div class="setting-group">
+                <label for="themeSelector">Theme</label>
+                <select id="themeSelector" aria-label="Select theme">
+                    <option value="dark">Dark</option>
+                    <option value="light">Light</option>
+                    <option value="midnight">Midnight Blue</option>
+                    <option value="charcoal">Charcoal</option>
+                    <option value="slate">Slate Gray</option>
+                </select>
+            </div>
+            
+            <div class="setting-group">
+                <label for="viewMode">View Mode</label>
+                <select id="viewMode" aria-label="Select view mode">
+                    <option value="minimal">Minimal</option>
+                    <option value="detailed">Detailed</option>
+                    <option value="calendar">Calendar</option>
+                </select>
+            </div>
+            
+            <div class="setting-group">
+                <label for="progressStyle">Progress Style</label>
+                <select id="progressStyle" aria-label="Select progress style">
+                    <option value="bar">Linear Bar</option>
+                    <option value="circle">Circular</option>
+                    <option value="both">Both</option>
+                </select>
+            </div>
+            
+            <div class="setting-group">
+                <label for="languageSelector">Language</label>
+                <select id="languageSelector" aria-label="Select language">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="ja">日本語</option>
+                </select>
+            </div>
+            
+            <div class="setting-group">
+                <label for="fontSelector">Font</label>
+                <select id="fontSelector" aria-label="Select font">
+                    <option value="sf-mono">SF Mono</option>
+                    <option value="fira-code">Fira Code</option>
+                    <option value="jetbrains">JetBrains Mono</option>
+                    <option value="cascadia">Cascadia Code</option>
+                    <option value="roboto">Roboto Mono</option>
+                </select>
+            </div>
+            
+            <div class="setting-group">
+                <label for="particlesToggle">Particles</label>
+                <input type="checkbox" id="particlesToggle" aria-label="Toggle particles">
+            </div>
+            
+            <div class="setting-group">
+                <label for="quotesToggle">Quotes</label>
+                <input type="checkbox" id="quotesToggle" aria-label="Toggle quotes" checked>
+            </div>
+            
+            <div class="setting-group">
+                <label for="holidaysToggle">Holidays</label>
+                <input type="checkbox" id="holidaysToggle" aria-label="Toggle holidays" checked>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+    
+    <!-- Main Container -->
+    <div class="container">
+        <div class="clock-wrapper">
+            <div class="year-label">
+                <span id="currentYear"></span>
+            </div>
+            
+            <div class="main-display">
+                <div class="time-remaining">
+                    <div class="big-number" id="daysRemaining">
+                        <span class="number">--</span>
+                        <span class="label">DAYS</span>
+                    </div>
+                </div>
+                
+                <div class="time-details">
+                    <div class="time-unit">
+                        <span class="value" id="hours">--</span>
+                        <span class="unit-label">HOURS</span>
+                    </div>
+                    <div class="separator">:</div>
+                    <div class="time-unit">
+                        <span class="value" id="minutes">--</span>
+                        <span class="unit-label">MINUTES</span>
+                    </div>
+                    <div class="separator">:</div>
+                    <div class="time-unit">
+                        <span class="value" id="seconds">--</span>
+                        <span class="unit-label">SECONDS</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="progress-section">
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="progressPercentage">0</span>% OF YEAR COMPLETE
+                </div>
+            </div>
+            
+            <div class="current-time">
+                <span id="currentDateTime"></span>
+            </div>
+            
+            <!-- Quarterly Progress -->
+            <div class="quarterly-progress" id="quarterlyProgress">
+                <h3>Quarterly Progress</h3>
+                <div class="quarters-grid">
+                    <div class="quarter" data-quarter="1">
+                        <span class="quarter-label">Q1</span>
+                        <div class="quarter-bar">
+                            <div class="quarter-fill" id="q1Progress"></div>
+                        </div>
+                        <span class="quarter-percent" id="q1Percent">0%</span>
+                    </div>
+                    <div class="quarter" data-quarter="2">
+                        <span class="quarter-label">Q2</span>
+                        <div class="quarter-bar">
+                            <div class="quarter-fill" id="q2Progress"></div>
+                        </div>
+                        <span class="quarter-percent" id="q2Percent">0%</span>
+                    </div>
+                    <div class="quarter" data-quarter="3">
+                        <span class="quarter-label">Q3</span>
+                        <div class="quarter-bar">
+                            <div class="quarter-fill" id="q3Progress"></div>
+                        </div>
+                        <span class="quarter-percent" id="q3Percent">0%</span>
+                    </div>
+                    <div class="quarter" data-quarter="4">
+                        <span class="quarter-label">Q4</span>
+                        <div class="quarter-bar">
+                            <div class="quarter-fill" id="q4Progress"></div>
+                        </div>
+                        <span class="quarter-percent" id="q4Percent">0%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Monthly & Weekly Progress -->
+            <div class="time-scales" id="timeScales">
+                <div class="scale-item">
+                    <span class="scale-label">Month</span>
+                    <span class="scale-value" id="currentMonth">-</span>
+                    <div class="scale-progress">
+                        <div class="scale-fill" id="monthProgress"></div>
+                    </div>
+                </div>
+                <div class="scale-item">
+                    <span class="scale-label">Week</span>
+                    <span class="scale-value" id="currentWeek">-</span>
+                    <div class="scale-progress">
+                        <div class="scale-fill" id="weekProgress"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Circular Progress -->
+            <div class="circular-progress-container" id="circularProgress" style="display: none;">
+                <svg class="circular-progress" width="200" height="200">
+                    <defs>
+                        <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:var(--gradient-start);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:var(--gradient-end);stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <circle class="circle-bg" cx="100" cy="100" r="90"></circle>
+                    <circle class="circle-progress" id="circleProgress" cx="100" cy="100" r="90"></circle>
+                    <text x="100" y="100" class="circle-text" id="circlePercent">0%</text>
+                </svg>
+            </div>
+            
+            <!-- Holiday Countdowns -->
+            <div class="holiday-countdowns" id="holidayCountdowns">
+                <h3>Upcoming Holidays</h3>
+                <div class="holidays-list" id="holidaysList"></div>
+            </div>
+            
+            <!-- Motivational Quote -->
+            <div class="quote-container" id="quoteContainer">
+                <blockquote id="dailyQuote"></blockquote>
+                <cite id="quoteAuthor"></cite>
+            </div>
+            
+            <!-- Heatmap Calendar -->
+            <div class="heatmap-calendar" id="heatmapCalendar" style="display: none;">
+                <h3>Year Heatmap</h3>
+                <div class="heatmap-grid" id="heatmapGrid"></div>
+                <div class="heatmap-legend">
+                    <span>Past</span>
+                    <div class="legend-blocks">
+                        <div class="legend-block" data-level="0"></div>
+                        <div class="legend-block" data-level="1"></div>
+                        <div class="legend-block" data-level="2"></div>
+                        <div class="legend-block" data-level="3"></div>
+                        <div class="legend-block" data-level="4"></div>
+                    </div>
+                    <span>Future</span>
+                </div>
+            </div>
+            
+            <!-- Milestone Notifications (Disabled) -->
+            <!-- <div class="milestone-notification" id="milestoneNotification" style="display: none;">
+                <span class="milestone-icon">🎉</span>
+                <span class="milestone-text"></span>
+            </div> -->
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script src="features.js"></script>
+    <script src="particles.js"></script>
+</body>
+</html>

@@ -1,0 +1,704 @@
+/* Theme Variables */
+:root {
+    --font-primary: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+}
+
+/* Dark Theme (Default) */
+body.dark-theme {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #141414;
+    --bg-tertiary: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
+    --text-muted: #5a5a5a;
+    --text-dim: #3a3a3a;
+    --accent: #6a6a6a;
+    --border: #2a2a2a;
+    --gradient-start: #ffffff;
+    --gradient-end: #808080;
+    --shadow: rgba(0, 0, 0, 0.5);
+    --glow: rgba(255, 255, 255, 0.1);
+}
+
+/* Light Theme */
+body.light-theme {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f5;
+    --bg-tertiary: #e8e8e8;
+    --text-primary: #0a0a0a;
+    --text-secondary: #2a2a2a;
+    --text-muted: #4a4a4a;
+    --text-dim: #6a6a6a;
+    --accent: #3a3a3a;
+    --border: #c0c0c0;
+    --gradient-start: #0a0a0a;
+    --gradient-end: #5a5a5a;
+    --shadow: rgba(0, 0, 0, 0.15);
+    --glow: rgba(0, 0, 0, 0.1);
+}
+
+/* Midnight Blue Theme */
+body.midnight-theme {
+    --bg-primary: #0a0f1c;
+    --bg-secondary: #141b2d;
+    --bg-tertiary: #1a2332;
+    --text-primary: #e8f4fd;
+    --text-secondary: #b8d4e8;
+    --text-muted: #5a7a9a;
+    --text-dim: #3a5570;
+    --accent: #4a8bc2;
+    --border: #2a3f5f;
+    --gradient-start: #a8d8ff;
+    --gradient-end: #4a8bc2;
+    --shadow: rgba(10, 15, 28, 0.5);
+    --glow: rgba(74, 139, 194, 0.2);
+}
+
+/* Charcoal Theme */
+body.charcoal-theme {
+    --bg-primary: #1c1c1c;
+    --bg-secondary: #252525;
+    --bg-tertiary: #2e2e2e;
+    --text-primary: #f0f0f0;
+    --text-secondary: #d0d0d0;
+    --text-muted: #707070;
+    --text-dim: #505050;
+    --accent: #808080;
+    --border: #3a3a3a;
+    --gradient-start: #e0e0e0;
+    --gradient-end: #909090;
+    --shadow: rgba(0, 0, 0, 0.6);
+    --glow: rgba(240, 240, 240, 0.08);
+}
+
+/* Slate Gray Theme */
+body.slate-theme {
+    --bg-primary: #2c3e50;
+    --bg-secondary: #34495e;
+    --bg-tertiary: #3c5066;
+    --text-primary: #ecf0f1;
+    --text-secondary: #bdc3c7;
+    --text-muted: #7f8c8d;
+    --text-dim: #5d6d7e;
+    --accent: #95a5a6;
+    --border: #4a5f7a;
+    --gradient-start: #ecf0f1;
+    --gradient-end: #95a5a6;
+    --shadow: rgba(44, 62, 80, 0.5);
+    --glow: rgba(236, 240, 241, 0.1);
+}
+
+/* Font Families */
+body.font-sf-mono {
+    --font-primary: 'SF Mono', monospace;
+}
+
+body.font-fira-code {
+    --font-primary: 'Fira Code', monospace;
+}
+
+body.font-jetbrains {
+    --font-primary: 'JetBrains Mono', monospace;
+}
+
+body.font-cascadia {
+    --font-primary: 'Cascadia Code', monospace;
+}
+
+body.font-roboto {
+    --font-primary: 'Roboto Mono', monospace;
+}
+
+/* Apply theme variables */
+body {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-primary);
+}
+
+body::before {
+    background: radial-gradient(circle at center, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+}
+
+/* Settings Panel Styles */
+.settings-panel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.settings-toggle {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.settings-toggle:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    transform: rotate(90deg);
+}
+
+.settings-toggle:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.settings-toggle:focus:not(:focus-visible) {
+    outline: none;
+}
+
+.settings-content {
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 250px;
+    max-height: 500px;
+    overflow-y: auto;
+    display: none;
+    box-shadow: 0 10px 40px var(--shadow);
+}
+
+.settings-panel.active .settings-content {
+    display: block;
+    animation: slideIn 0.3s ease;
+}
+
+.settings-content h3 {
+    margin: 0 0 20px 0;
+    color: var(--text-primary);
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+.setting-group {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.setting-group label {
+    color: var(--text-muted);
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.setting-group select,
+.setting-group input[type="checkbox"] {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.setting-group select:focus,
+.setting-group input[type="checkbox"]:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.setting-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}
+
+/* Quarterly Progress Styles */
+.quarterly-progress {
+    margin-top: 40px;
+    padding: 20px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    display: none;
+}
+
+.quarterly-progress.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.quarterly-progress h3 {
+    color: var(--text-muted);
+    font-size: 12px;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.quarters-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.quarter {
+    text-align: center;
+}
+
+.quarter-label {
+    color: var(--text-dim);
+    font-size: 11px;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.quarter-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--bg-tertiary);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.quarter-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--text-muted) 100%);
+    border-radius: 2px;
+    transition: width 1s ease;
+}
+
+.quarter-percent {
+    color: var(--text-muted);
+    font-size: 10px;
+}
+
+/* Time Scales */
+.time-scales {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin-top: 30px;
+    display: none;
+}
+
+.time-scales.active {
+    display: flex;
+    animation: fadeIn 0.5s ease;
+}
+
+.scale-item {
+    text-align: center;
+    min-width: 120px;
+}
+
+.scale-label {
+    color: var(--text-dim);
+    font-size: 10px;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.scale-value {
+    color: var(--text-secondary);
+    font-size: 18px;
+    font-weight: 300;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.scale-progress {
+    width: 100%;
+    height: 2px;
+    background: var(--bg-tertiary);
+    border-radius: 1px;
+    overflow: hidden;
+}
+
+.scale-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.5s ease;
+}
+
+/* Circular Progress */
+.circular-progress-container {
+    margin: 40px auto;
+    text-align: center;
+}
+
+.circular-progress {
+    transform: rotate(-90deg);
+}
+
+.circle-bg {
+    fill: none;
+    stroke: var(--bg-tertiary);
+    stroke-width: 8;
+}
+
+.circle-progress {
+    fill: none;
+    stroke: url(#progressGradient);
+    stroke-width: 8;
+    stroke-linecap: round;
+    stroke-dasharray: 565.48;
+    stroke-dashoffset: 565.48;
+    transition: stroke-dashoffset 1s ease;
+}
+
+.circle-text {
+    fill: var(--text-primary);
+    font-size: 32px;
+    font-weight: 200;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    transform: rotate(90deg);
+    transform-origin: center;
+}
+
+/* Holiday Countdowns */
+.holiday-countdowns {
+    margin-top: 40px;
+    padding: 20px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    display: none;
+}
+
+.holiday-countdowns.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.holiday-countdowns h3 {
+    color: var(--text-muted);
+    font-size: 12px;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.holidays-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.holiday-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.holiday-item:hover {
+    background: var(--bg-primary);
+    transform: translateX(5px);
+}
+
+.holiday-name {
+    color: var(--text-secondary);
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+.holiday-countdown {
+    color: var(--text-muted);
+    font-size: 11px;
+}
+
+/* Quote Container */
+.quote-container {
+    margin-top: 40px;
+    padding: 20px;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 2s ease 1s forwards;
+}
+
+#dailyQuote {
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.6;
+    font-style: italic;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+#quoteAuthor {
+    color: var(--text-dim);
+    font-size: 11px;
+    margin-top: 10px;
+    display: block;
+    letter-spacing: 2px;
+}
+
+/* Heatmap Calendar */
+.heatmap-calendar {
+    margin-top: 40px;
+    padding: 20px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+}
+
+.heatmap-calendar h3 {
+    color: var(--text-muted);
+    font-size: 12px;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.heatmap-grid {
+    display: grid;
+    grid-template-columns: repeat(53, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    gap: 2px;
+    margin-bottom: 20px;
+}
+
+.heatmap-cell {
+    aspect-ratio: 1;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.heatmap-cell[data-level="0"] { background: var(--bg-tertiary); }
+.heatmap-cell[data-level="1"] { background: var(--text-dim); opacity: 0.3; }
+.heatmap-cell[data-level="2"] { background: var(--text-dim); opacity: 0.5; }
+.heatmap-cell[data-level="3"] { background: var(--text-dim); opacity: 0.7; }
+.heatmap-cell[data-level="4"] { background: var(--text-muted); }
+.heatmap-cell.future { opacity: 0.3; }
+
+.heatmap-cell:hover {
+    transform: scale(1.5);
+    border: 1px solid var(--accent);
+}
+
+.heatmap-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 10px;
+    color: var(--text-dim);
+}
+
+.legend-blocks {
+    display: flex;
+    gap: 3px;
+}
+
+.legend-block {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.legend-block[data-level="0"] { background: var(--bg-tertiary); }
+.legend-block[data-level="1"] { background: var(--text-dim); opacity: 0.3; }
+.legend-block[data-level="2"] { background: var(--text-dim); opacity: 0.5; }
+.legend-block[data-level="3"] { background: var(--text-dim); opacity: 0.7; }
+.legend-block[data-level="4"] { background: var(--text-muted); }
+
+/* Milestone Notification */
+.milestone-notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--bg-secondary);
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    padding: 30px;
+    text-align: center;
+    z-index: 2000;
+    animation: bounceIn 0.5s ease;
+}
+
+.milestone-icon {
+    font-size: 48px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.milestone-text {
+    color: var(--text-primary);
+    font-size: 18px;
+    letter-spacing: 2px;
+}
+
+/* Particle Canvas */
+#particleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    display: none;
+}
+
+/* Smooth transitions for all interactive elements */
+button, select, input, a {
+    transition: all 0.3s ease;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.3);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Update existing styles with theme variables */
+.big-number .number {
+    color: var(--text-primary);
+    text-shadow: 0 0 40px var(--glow);
+    font-weight: 100;
+}
+
+.big-number .label {
+    color: var(--text-muted);
+}
+
+.time-unit .value {
+    color: var(--text-secondary);
+}
+
+.time-unit .unit-label {
+    color: var(--text-dim);
+}
+
+.separator {
+    color: var(--border);
+}
+
+.progress-bar-container {
+    background: var(--bg-tertiary);
+    box-shadow: inset 0 0 10px var(--shadow);
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, var(--border) 0%, var(--accent) 50%, var(--border) 100%);
+    box-shadow: 0 0 20px var(--glow);
+}
+
+.progress-text {
+    color: var(--text-dim);
+}
+
+.progress-text span {
+    color: var(--text-muted);
+}
+
+.current-time {
+    color: var(--border);
+}
+
+.year-label {
+    color: var(--text-dim);
+}
+
+/* Light Theme Specific Overrides */
+body.light-theme .big-number .number {
+    color: #0a0a0a !important;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+body.light-theme .big-number .label {
+    color: #4a4a4a;
+}
+
+body.light-theme .time-unit .value {
+    color: #2a2a2a;
+}
+
+body.light-theme .time-unit .unit-label {
+    color: #6a6a6a;
+}
+
+body.light-theme .separator {
+    color: #8a8a8a;
+}
+
+body.light-theme .progress-text {
+    color: #6a6a6a;
+}
+
+body.light-theme .progress-text span {
+    color: #4a4a4a;
+}
+
+body.light-theme .current-time {
+    color: #8a8a8a;
+}
+
+body.light-theme .year-label {
+    color: #6a6a6a;
+}
+
+body.light-theme .quarter-label {
+    color: #6a6a6a;
+}
+
+body.light-theme .quarter-percent {
+    color: #4a4a4a;
+}
+
+body.light-theme .scale-label {
+    color: #6a6a6a;
+}
+
+body.light-theme .scale-value {
+    color: #2a2a2a;
+}
+
+body.light-theme .holiday-name {
+    color: #2a2a2a;
+}
+
+body.light-theme .holiday-countdown {
+    color: #6a6a6a;
+}
+
+body.light-theme #dailyQuote {
+    color: #4a4a4a;
+}
+
+body.light-theme #quoteAuthor {
+    color: #6a6a6a;
+}
