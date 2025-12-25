@@ -95,6 +95,29 @@ function calculateTimeRemaining() {
     };
 }
 
+// Smooth number transition helper
+function animateNumberChange(element, newValue, isBigNumber = false) {
+    if (!element) return;
+    
+    const currentValue = element.textContent.trim();
+    const newValueStr = newValue.toString();
+    
+    if (currentValue === newValueStr) return;
+    
+    // Add animation class
+    element.style.opacity = '0.7';
+    element.style.transform = isBigNumber ? 'scale(0.95)' : 'translateY(5px)';
+    
+    // Use requestAnimationFrame for smooth transition
+    requestAnimationFrame(() => {
+        setTimeout(() => {
+            element.textContent = newValueStr;
+            element.style.opacity = '1';
+            element.style.transform = isBigNumber ? 'scale(1)' : 'translateY(0)';
+        }, 150);
+    });
+}
+
 // Function to update the display
 function updateDisplay() {
     const timeData = calculateTimeRemaining();
@@ -106,26 +129,32 @@ function updateDisplay() {
     
     // Update remaining time with smooth transitions
     if (daysRemainingElement) {
-        if (daysRemainingElement.textContent !== timeData.days.toString()) {
-            daysRemainingElement.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                daysRemainingElement.textContent = timeData.days;
-                daysRemainingElement.style.transform = 'scale(1)';
-            }, 100);
+        animateNumberChange(daysRemainingElement, timeData.days, true);
+    }
+    
+    // Update hours, minutes, seconds with smooth transitions
+    animateNumberChange(hoursElement, padZero(timeData.hours));
+    animateNumberChange(minutesElement, padZero(timeData.minutes));
+    animateNumberChange(secondsElement, padZero(timeData.seconds));
+    
+    // Update progress bar with smooth animation
+    if (progressBarElement) {
+        const currentWidth = parseFloat(progressBarElement.style.width) || 0;
+        const newWidth = parseFloat(timeData.progressPercentage);
+        
+        if (Math.abs(currentWidth - newWidth) > 0.01) {
+            progressBarElement.style.width = `${timeData.progressPercentage}%`;
         }
     }
     
-    // Update hours, minutes, seconds
-    if (hoursElement) hoursElement.textContent = padZero(timeData.hours);
-    if (minutesElement) minutesElement.textContent = padZero(timeData.minutes);
-    if (secondsElement) secondsElement.textContent = padZero(timeData.seconds);
-    
-    // Update progress bar
-    if (progressBarElement) {
-        progressBarElement.style.width = `${timeData.progressPercentage}%`;
-    }
+    // Update progress percentage with animation
     if (progressPercentageElement) {
-        progressPercentageElement.textContent = timeData.progressPercentage;
+        const currentPercent = parseFloat(progressPercentageElement.textContent) || 0;
+        const newPercent = parseFloat(timeData.progressPercentage);
+        
+        if (Math.abs(currentPercent - newPercent) > 0.01) {
+            animateNumberChange(progressPercentageElement, timeData.progressPercentage);
+        }
     }
     
     // Update current date and time
@@ -139,16 +168,28 @@ function updateDisplay() {
     }
 }
 
-// Add subtle number change animation
-function addNumberChangeAnimation(element, newValue) {
-    const currentValue = element.textContent;
-    if (currentValue !== newValue) {
-        element.style.opacity = '0.7';
-        setTimeout(() => {
-            element.textContent = newValue;
-            element.style.opacity = '1';
-        }, 150);
-    }
+// Enhanced page load animation
+function addPageLoadAnimations() {
+    const elements = [
+        { selector: '.year-label', delay: 0 },
+        { selector: '.big-number', delay: 0.2 },
+        { selector: '.time-details', delay: 0.4 },
+        { selector: '.progress-section', delay: 0.6 },
+        { selector: '.current-time', delay: 0.8 }
+    ];
+    
+    elements.forEach(({ selector, delay }) => {
+        const element = document.querySelector(selector);
+        if (element) {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                element.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                element.style.opacity = '1';
+                element.style.transform = 'translateY(0)';
+            }, delay * 1000);
+        }
+    });
 }
 
 // Initialize and start the clock
@@ -164,11 +205,16 @@ function initClock() {
         daysRemainingElement.style.opacity = '1';
     }
     
+    // Add page load animations
+    addPageLoadAnimations();
+    
     // Initial update
     updateDisplay();
     
-    // Update every second
-    setInterval(updateDisplay, 1000);
+    // Update every second with precise timing
+    setInterval(() => {
+        updateDisplay();
+    }, 1000);
     
     // Add subtle animations to time units on load
     const timeUnits = document.querySelectorAll('.time-unit');
@@ -182,8 +228,22 @@ document.querySelectorAll('.value').forEach(element => {
     element.style.transition = 'all 0.3s ease';
 });
 
-// Start the clock when DOM is loaded
-document.addEventListener('DOMContentLoaded', initClock);
+// Hide loading screen and start the clock when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    // Hide loading screen after a brief delay
+    const loadingScreen = document.getElementById('loadingScreen');
+    if (loadingScreen) {
+        setTimeout(() => {
+            loadingScreen.classList.add('hidden');
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 500);
+        }, 300);
+    }
+    
+    // Initialize clock
+    initClock();
+});
 
 // Add a subtle glow effect on hover for interactive elements
 document.addEventListener('DOMContentLoaded', () => {

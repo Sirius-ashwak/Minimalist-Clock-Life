@@ -27,15 +27,22 @@ class ParticleSystem {
                 size: Math.random() * 2 + 0.5,
                 speedX: (Math.random() - 0.5) * 0.5,
                 speedY: (Math.random() - 0.5) * 0.5,
-                opacity: Math.random() * 0.5 + 0.2
+                opacity: Math.random() * 0.5 + 0.2,
+                baseOpacity: Math.random() * 0.5 + 0.2,
+                pulseSpeed: Math.random() * 0.02 + 0.01
             });
         }
     }
     
     update() {
+        const time = Date.now() * 0.001;
         this.particles.forEach(p => {
             p.x += p.speedX;
             p.y += p.speedY;
+            
+            // Pulse opacity for more dynamic effect
+            p.opacity = p.baseOpacity + Math.sin(time * p.pulseSpeed) * 0.2;
+            p.opacity = Math.max(0.1, Math.min(0.7, p.opacity));
             
             if (p.x < 0) p.x = this.canvas.width;
             if (p.x > this.canvas.width) p.x = 0;
@@ -47,10 +54,42 @@ class ParticleSystem {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         
+        // Draw connections between nearby particles
+        this.particles.forEach((p1, i) => {
+            this.particles.slice(i + 1).forEach(p2 => {
+                const dx = p2.x - p1.x;
+                const dy = p2.y - p1.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                
+                if (distance < 150) {
+                    const opacity = (1 - distance / 150) * 0.1;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(p1.x, p1.y);
+                    this.ctx.lineTo(p2.x, p2.y);
+                    this.ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+                    this.ctx.lineWidth = 0.5;
+                    this.ctx.stroke();
+                }
+            });
+        });
+        
+        // Draw particles with glow effect
         this.particles.forEach(p => {
+            // Outer glow
+            const gradient = this.ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 3);
+            gradient.addColorStop(0, `rgba(255, 255, 255, ${p.opacity})`);
+            gradient.addColorStop(0.5, `rgba(255, 255, 255, ${p.opacity * 0.5})`);
+            gradient.addColorStop(1, `rgba(255, 255, 255, 0)`);
+            
+            this.ctx.beginPath();
+            this.ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
+            this.ctx.fillStyle = gradient;
+            this.ctx.fill();
+            
+            // Core particle
             this.ctx.beginPath();
             this.ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            this.ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
+            this.ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity * 1.5})`;
             this.ctx.fill();
         });
     }

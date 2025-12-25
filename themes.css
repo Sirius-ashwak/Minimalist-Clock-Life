@@ -135,18 +135,40 @@ body::before {
     padding: 10px;
     border-radius: 50%;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     width: 44px;
     height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 2px 8px var(--shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+.settings-toggle::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: var(--glow);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
 }
 
 .settings-toggle:hover {
     background: var(--bg-tertiary);
     color: var(--text-secondary);
-    transform: rotate(90deg);
+    transform: rotate(90deg) scale(1.05);
+    box-shadow: 0 4px 16px var(--shadow), 0 0 20px var(--glow);
+}
+
+.settings-toggle:hover::before {
+    width: 100%;
+    height: 100%;
 }
 
 .settings-toggle:focus {
@@ -170,7 +192,9 @@ body::before {
     max-height: 500px;
     overflow-y: auto;
     display: none;
-    box-shadow: 0 10px 40px var(--shadow);
+    box-shadow: 0 10px 40px var(--shadow), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .settings-panel.active .settings-content {
@@ -206,6 +230,14 @@ body::before {
     padding: 5px 10px;
     border-radius: 4px;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.setting-group select:hover {
+    background: var(--bg-primary);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px var(--shadow);
 }
 
 .setting-group select:focus,
@@ -272,7 +304,29 @@ body::before {
     height: 100%;
     background: linear-gradient(90deg, var(--accent) 0%, var(--text-muted) 100%);
     border-radius: 2px;
-    transition: width 1s ease;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.quarter-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: quarterShine 2s ease-in-out infinite;
+}
+
+@keyframes quarterShine {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 .quarter-percent {
@@ -325,8 +379,30 @@ body::before {
 
 .scale-fill {
     height: 100%;
-    background: var(--accent);
-    transition: width 0.5s ease;
+    background: linear-gradient(90deg, var(--accent) 0%, var(--text-muted) 100%);
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.scale-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    animation: scaleShine 2.5s ease-in-out infinite;
+}
+
+@keyframes scaleShine {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 /* Circular Progress */
@@ -352,7 +428,18 @@ body::before {
     stroke-linecap: round;
     stroke-dasharray: 565.48;
     stroke-dashoffset: 565.48;
-    transition: stroke-dashoffset 1s ease;
+    transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 4px var(--glow));
+    animation: circlePulse 3s ease-in-out infinite;
+}
+
+@keyframes circlePulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.9;
+    }
 }
 
 .circle-text {
@@ -363,6 +450,8 @@ body::before {
     dominant-baseline: middle;
     transform: rotate(90deg);
     transform-origin: center;
+    transition: fill 0.3s ease;
+    filter: drop-shadow(0 0 2px var(--glow));
 }
 
 /* Holiday Countdowns */
@@ -400,12 +489,33 @@ body::before {
     padding: 10px;
     background: var(--bg-tertiary);
     border-radius: 8px;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.holiday-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--accent);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
 }
 
 .holiday-item:hover {
     background: var(--bg-primary);
     transform: translateX(5px);
+    border-color: var(--border);
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.holiday-item:hover::before {
+    transform: scaleY(1);
 }
 
 .holiday-name {
@@ -426,6 +536,20 @@ body::before {
     text-align: center;
     opacity: 0;
     animation: fadeIn 2s ease 1s forwards;
+    position: relative;
+}
+
+.quote-container::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 60px;
+    color: var(--text-dim);
+    opacity: 0.2;
+    font-family: serif;
+    line-height: 1;
 }
 
 #dailyQuote {
@@ -435,6 +559,13 @@ body::before {
     font-style: italic;
     margin: 0;
     letter-spacing: 0.5px;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.quote-container:hover #dailyQuote {
+    color: var(--text-secondary);
 }
 
 #quoteAuthor {
@@ -486,6 +617,9 @@ body::before {
 .heatmap-cell:hover {
     transform: scale(1.5);
     border: 1px solid var(--accent);
+    z-index: 10;
+    box-shadow: 0 0 10px var(--glow);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .heatmap-legend {
@@ -555,7 +689,36 @@ body::before {
 
 /* Smooth transitions for all interactive elements */
 button, select, input, a {
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced focus states */
+button:focus-visible,
+select:focus-visible,
+input:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+/* Smooth scrollbar */
+.settings-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.settings-content::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+    border-radius: 3px;
+}
+
+.settings-content::-webkit-scrollbar-thumb {
+    background: var(--text-dim);
+    border-radius: 3px;
+    transition: background 0.3s ease;
+}
+
+.settings-content::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
 }
 
 /* Animations */
