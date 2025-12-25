@@ -126,24 +126,46 @@ body::before {
     top: 20px;
     right: 20px;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .settings-toggle {
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     color: var(--text-muted);
-    padding: 10px;
+    padding: 0;
+    margin: 0;
     border-radius: 50%;
     cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     width: 44px;
     height: 44px;
+    min-width: 44px;
+    min-height: 44px;
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 8px var(--shadow);
     position: relative;
     overflow: hidden;
+    flex-shrink: 0;
+    line-height: 0;
+}
+
+.settings-toggle svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+    margin: 0;
+    padding: 0;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center center;
+    position: relative;
+    z-index: 1;
 }
 
 .settings-toggle::before {
@@ -157,13 +179,22 @@ body::before {
     background: var(--glow);
     transform: translate(-50%, -50%);
     transition: width 0.4s ease, height 0.4s ease;
+    z-index: -1;
 }
 
 .settings-toggle:hover {
     background: var(--bg-tertiary);
     color: var(--text-secondary);
-    transform: rotate(90deg) scale(1.05);
+    transform: scale(1.05);
     box-shadow: 0 4px 16px var(--shadow), 0 0 20px var(--glow);
+}
+
+.settings-toggle:hover svg {
+    transform: rotate(90deg) translateZ(0);
+}
+
+.settings-toggle:active {
+    transform: scale(0.98);
 }
 
 .settings-toggle:hover::before {
@@ -195,11 +226,23 @@ body::before {
     box-shadow: 0 10px 40px var(--shadow), 0 0 0 1px rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    transform-origin: top right;
+    will-change: transform, opacity;
 }
 
 .settings-panel.active .settings-content {
     display: block;
     animation: slideIn 0.3s ease;
+    transform: scale(1);
+    opacity: 1;
+}
+
+.settings-panel.active .settings-toggle {
+    transform: scale(1);
+}
+
+.settings-panel.active .settings-toggle:hover {
+    transform: scale(1.05);
 }
 
 .settings-content h3 {
@@ -725,11 +768,11 @@ input:focus-visible {
 @keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateY(-10px);
+        transform: translateY(-10px) scale(0.95);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
